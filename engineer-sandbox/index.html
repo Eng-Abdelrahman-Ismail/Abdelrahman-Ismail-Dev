@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Engineer's Visual Sandbox</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="particles-js"></div>
+
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <a href="#" class="logo" onclick="app.showHome()">
+                <i class="fa-solid fa-cube"></i> Visual Sandbox
+            </a>
+            <div class="nav-links">
+                <a href="../index.html">Back to Portfolio</a>
+            </div>
+        </nav>
+
+        <!-- Home Dashboard -->
+        <div id="home-view">
+            <header>
+                <h1 class="hero-title">The Engineer's Visual Sandbox</h1>
+                <p class="hero-subtitle">
+                    A suite of interactive, high-performance visualization tools for signal processing, networking, and
+                    electronics design.
+                    Experience engineering concepts like never before.
+                </p>
+                <div class="hero-metrics">
+                    <div class="metric-card">
+                        <span class="metric-value">3</span>
+                        <span class="metric-label">Core Labs</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-value">Real-Time</span>
+                        <span class="metric-label">Visual Insights</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-value">Export</span>
+                        <span class="metric-label">Code Ready</span>
+                    </div>
+                </div>
+                <div class="hero-actions">
+                    <button class="btn-launch" onclick="app.loadTool('dsp')">
+                        <i class="fa-solid fa-rocket"></i> Launch DSP Visualizer
+                    </button>
+                    <button class="btn-secondary" onclick="app.loadTool('subnet')">
+                        <i class="fa-solid fa-network-wired"></i> Open Subnetting Hero
+                    </button>
+                </div>
+            </header>
+
+            <div class="tools-grid">
+                <!-- DSP Visualizer Card -->
+                <div class="tool-card" onclick="app.loadTool('dsp')">
+                    <div class="card-icon"><i class="fa-solid fa-wave-square"></i></div>
+                    <h3 class="card-title">DSP Visualizer</h3>
+                    <p class="card-desc">Real-time FFT & Z-Transform visualization. Upload audio or input equations to
+                        see sound come alive.</p>
+                    <div class="card-tags">
+                        <span>FFT</span>
+                        <span>Waveform</span>
+                        <span>Audio</span>
+                    </div>
+                    <span class="btn-launch">Launch Tool</span>
+                </div>
+
+                <!-- Subnetting Hero Card -->
+                <div class="tool-card" onclick="app.loadTool('subnet')">
+                    <div class="card-icon"><i class="fa-solid fa-network-wired"></i></div>
+                    <h3 class="card-title">Subnetting Hero</h3>
+                    <p class="card-desc">Master network divisions with our Visual Network Mapping engine. Plan your IPs
+                        effortlessly.</p>
+                    <div class="card-tags">
+                        <span>CIDR</span>
+                        <span>IP Range</span>
+                        <span>Wildcard</span>
+                    </div>
+                    <span class="btn-launch">Launch Tool</span>
+                </div>
+
+                <!-- Filter Designer Card -->
+                <div class="tool-card" onclick="app.loadTool('filter')">
+                    <div class="card-icon"><i class="fa-solid fa-sliders"></i></div>
+                    <h3 class="card-title">Filter Designer</h3>
+                    <p class="card-desc">Design FIR/IIR filters with interactive Bode plots. Export ready-to-use C++ &
+                        Python code.</p>
+                    <div class="card-tags">
+                        <span>Bode Plot</span>
+                        <span>Biquad</span>
+                        <span>Export</span>
+                    </div>
+                    <span class="btn-launch">Launch Tool</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tool Views Containers -->
+
+        <!-- DSP Tool -->
+        <div id="dsp-view" class="tool-view">
+            <button class="back-btn" onclick="app.showHome()"><i class="fa-solid fa-arrow-left"></i> Back to
+                Dashboard</button>
+            <h2>DSP Visualizer</h2>
+            <div id="dsp-container">
+                <!-- DSP Content will be injected here -->
+                <div class="placeholder-content" style="text-align:center; padding: 5rem; color: var(--text-muted);">
+                    <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+                    <p>Loading DSP Module...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subnet Tool -->
+        <div id="subnet-view" class="tool-view">
+            <button class="back-btn" onclick="app.showHome()"><i class="fa-solid fa-arrow-left"></i> Back to
+                Dashboard</button>
+            <h2>Subnetting Hero</h2>
+            <div id="subnet-container">
+                <!-- Subnet Content will be injected here -->
+                <div class="placeholder-content" style="text-align:center; padding: 5rem; color: var(--text-muted);">
+                    <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+                    <p>Loading Subnet Module...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Tool -->
+        <div id="filter-view" class="tool-view">
+            <button class="back-btn" onclick="app.showHome()"><i class="fa-solid fa-arrow-left"></i> Back to
+                Dashboard</button>
+            <h2>Filter Designer</h2>
+            <div id="filter-container">
+                <!-- Filter Content will be injected here -->
+                <div class="placeholder-content" style="text-align:center; padding: 5rem; color: var(--text-muted);">
+                    <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+                    <p>Loading Filter Module...</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Main App Script -->
+    <script src="js/app.js"></script>
+
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 100,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#00f2ff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#00f2ff",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+    <script src="js/dsp.js"></script>
+    <script src="js/subnet.js"></script>
+    <script src="js/filter.js"></script>
+</body>
+
+</html>
