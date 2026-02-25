@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+
+    <div class="app-layout">
+        <div class="main-container">
+            <!-- Header with Chat Toggle -->
+            <div class="header-controls"
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h2 style="color: var(--primary-color); font-size: 1.2rem;">SciCalc</h2>
+                <button class="btn-primary" onclick="toggleChat()" style="padding: 5px 15px; font-size: 0.9rem;">Open
+                    Chat</button>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('calculator')">Calc</button>
+                <button class="tab-btn" onclick="switchTab('graphing')">Graph</button>
+                <button class="tab-btn" onclick="switchTab('history')">History</button>
+                <button class="tab-btn" onclick="switchTab('analysis')">Analysis</button>
+                <button class="tab-btn" onclick="switchTab('base')">Base</button>
+                <button class="tab-btn" onclick="switchTab('unit')">Unit</button>
+                <button class="tab-btn" onclick="switchTab('logic')">Logic</button>
+            </div>
+
+            <!-- Calculator Tab -->
+            <div id="calculator-tab" class="tab-content active">
+                <div class="calculator">
+                    <div class="display">
+                        <div class="history" id="calc-preview"></div>
+                        <input type="text" class="screen" id="screen" placeholder="0" readonly>
+                    </div>
+                    <div class="buttons">
+                        <!-- Scientific Functions -->
+                        <button class="btn func" onclick="insert('fact(')">x!</button>
+                        <button class="btn func" onclick="insert('(')">(</button>
+                        <button class="btn func" onclick="insert(')')">)</button>
+                        <button class="btn func" onclick="insert('%')">%</button>
+                        <button class="btn clear" onclick="clearScreen()">AC</button>
+
+                        <button class="btn func" onclick="insert('sin(')">sin</button>
+                        <button class="btn func" onclick="insert('cos(')">cos</button>
+                        <button class="btn func" onclick="insert('tan(')">tan</button>
+                        <button class="btn func" onclick="insert('^')">x^y</button>
+                        <button class="btn op" onclick="insert('/')">÷</button>
+
+                        <button class="btn func" onclick="insert('log10(')">log</button>
+                        <button class="btn func" onclick="insert('ln(')">ln</button>
+                        <button class="btn func" onclick="insert('sqrt(')">√</button>
+                        <button class="btn func" onclick="insert('pi')">π</button>
+                        <button class="btn op" onclick="insert('*')">×</button>
+
+                        <button class="btn num" onclick="insert('7')">7</button>
+
+                        <button class="btn num" onclick="insert('8')">8</button>
+                        <button class="btn num" onclick="insert('9')">9</button>
+                        <button class="btn func" onclick="insert('e')">e</button>
+                        <button class="btn op" onclick="insert('-')">-</button>
+
+                        <button class="btn num" onclick="insert('4')">4</button>
+                        <button class="btn num" onclick="insert('5')">5</button>
+                        <button class="btn num" onclick="insert('6')">6</button>
+                        <button class="btn func" onclick="insert('nthRoot(')">ⁿ√</button>
+                        <button class="btn op" onclick="insert('+')">+</button>
+
+                        <button class="btn num" onclick="insert('1')">1</button>
+                        <button class="btn num" onclick="insert('2')">2</button>
+                        <button class="btn num" onclick="insert('3')">3</button>
+                        <button class="btn func" id="degRadBtn" onclick="toggleDegRad()">Deg</button>
+                        <button class="btn equal" onclick="calculate()">=</button>
+
+                        <button class="btn num zero" onclick="insert('0')">0</button>
+                        <button class="btn num" onclick="insert('.')">.</button>
+                        <button class="btn func" onclick="backspc()">⌫</button>
+                        <button class="btn func" onclick="insert(',')">,</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Graphing Tab -->
+            <div id="graphing-tab" class="tab-content">
+                <div class="graph-controls" style="flex-direction: column; align-items: stretch;">
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <select id="graph-mode" onchange="updateGraphInputs()"
+                            style="flex: 1; padding: 10px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 8px; color: #fff;">
+                            <option value="2d">2D Graph (y = f(x))</option>
+                            <option value="3d">3D Graph (z = f(x, y))</option>
+                        </select>
+                        <button class="btn-primary" onclick="plotGraph()">Plot</button>
+                    </div>
+                    <input type="text" id="graph-input" placeholder="Enter function, e.g., sin(x)">
+                </div>
+                <div id="plot-container"></div>
+            </div>
+
+            <!-- History Tab -->
+            <div id="history-tab" class="tab-content">
+                <div class="history-container">
+                    <div class="history-header"
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h3 style="color: var(--primary-color);">History</h3>
+                        <button class="btn-primary" style="background: #ff4444; padding: 5px 10px; font-size: 0.8rem;"
+                            onclick="clearHistory()">Clear</button>
+                    </div>
+                    <div id="history-list" class="history-list"
+                        style="display: flex; flex-direction: column; gap: 10px; max-height: 400px; overflow-y: auto;">
+                        <!-- History items will be added here -->
+                        <div class="empty-state"
+                            style="color: rgba(255,255,255,0.5); text-align: center; padding: 20px;">No history yet
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Tab -->
+            <div id="analysis-tab" class="tab-content">
+                <div class="analysis-controls">
+                    <input type="text" id="analysis-input" placeholder="Enter function, e.g., 1/x">
+                    <button class="btn-primary" onclick="analyzeFunction()">Analyze</button>
+                </div>
+                <div id="analysis-result" class="result-card">
+                    <h3>System Properties</h3>
+                    <div class="props-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <p><strong>Linearity:</strong> <span id="prop-linear">-</span></p>
+                        <p><strong>Time Invariance:</strong> <span id="prop-time">-</span></p>
+                        <p><strong>Memory:</strong> <span id="prop-memory">-</span></p>
+                        <p><strong>Causality:</strong> <span id="prop-causal">-</span></p>
+                        <p><strong>Stability:</strong> <span id="prop-stable">-</span></p>
+                        <p><strong>Domain:</strong> <span id="prop-domain">-</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Base Converter Tab -->
+            <div id="base-tab" class="tab-content">
+                <div class="converter-box">
+                    <h3>Base Converter</h3>
+                    <input type="text" id="base-input" placeholder="Enter Number">
+                    <div class="select-group">
+                        <select id="base-from">
+                            <option value="10">Decimal (10)</option>
+                            <option value="2">Binary (2)</option>
+                            <option value="16">Hexadecimal (16)</option>
+                            <option value="8">Octal (8)</option>
+                        </select>
+                        <span>to</span>
+                        <select id="base-to">
+                            <option value="2">Binary (2)</option>
+                            <option value="10">Decimal (10)</option>
+                            <option value="16">Hexadecimal (16)</option>
+                            <option value="8">Octal (8)</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" onclick="convertBase()">Convert</button>
+                    <div class="result-display" id="base-result">Result: -</div>
+                </div>
+            </div>
+
+            <!-- Unit Converter Tab -->
+            <div id="unit-tab" class="tab-content">
+                <div class="converter-box">
+                    <h3>Unit Converter</h3>
+                    <input type="text" id="unit-input" placeholder="Enter Value (e.g. 10)">
+                    <div class="select-group">
+                        <select id="unit-type" onchange="updateUnitOptions()">
+                            <option value="length">Length</option>
+                            <option value="mass">Mass</option>
+                            <option value="temperature">Temperature</option>
+                        </select>
+                    </div>
+                    <div class="select-group">
+                        <select id="unit-from"></select>
+                        <span>to</span>
+                        <select id="unit-to"></select>
+                    </div>
+                    <button class="btn-primary" onclick="convertUnit()">Convert</button>
+                    <div class="result-display" id="unit-result">Result: -</div>
+                </div>
+            </div>
+
+            <!-- Logic Gates Tab -->
+            <div id="logic-tab" class="tab-content">
+                <div class="logic-shell">
+                    <div class="logic-header">
+                        <div>
+                            <div class="logic-title">Logic Studio</div>
+                            <div class="logic-subtitle">Build circuits, wire signals, and test behavior live.</div>
+                        </div>
+                        <div class="logic-badge">Live Simulator</div>
+                    </div>
+
+                    <div class="logic-toolbar">
+                        <div class="logic-palette">
+                            <button class="logic-btn" onclick="addGate('AND')">AND</button>
+                            <button class="logic-btn" onclick="addGate('OR')">OR</button>
+                            <button class="logic-btn" onclick="addGate('NOT')">NOT</button>
+                            <button class="logic-btn" onclick="addGate('NAND')">NAND</button>
+                            <button class="logic-btn" onclick="addGate('NOR')">NOR</button>
+                            <button class="logic-btn" onclick="addGate('XOR')">XOR</button>
+                        </div>
+                        <div class="logic-tools">
+                            <button class="logic-btn ghost" onclick="addGate('SWITCH')">Switch</button>
+                            <button class="logic-btn ghost" onclick="addGate('LIGHT')">Light</button>
+                            <button class="logic-btn danger" onclick="clearLogicCanvas()">Clear</button>
+                        </div>
+                    </div>
+
+                    <div class="logic-workspace">
+                        <div class="logic-panels">
+                            <div class="logic-card logic-quick">
+                                <div class="logic-card-title">Quick Gate</div>
+                                <div class="quick-gate-buttons">
+                                    <button class="quick-gate-btn active" data-gate="AND" onclick="setQuickGate('AND')">AND</button>
+                                    <button class="quick-gate-btn" data-gate="OR" onclick="setQuickGate('OR')">OR</button>
+                                    <button class="quick-gate-btn" data-gate="NOT" onclick="setQuickGate('NOT')">NOT</button>
+                                    <button class="quick-gate-btn" data-gate="NAND" onclick="setQuickGate('NAND')">NAND</button>
+                                    <button class="quick-gate-btn" data-gate="NOR" onclick="setQuickGate('NOR')">NOR</button>
+                                    <button class="quick-gate-btn" data-gate="XOR" onclick="setQuickGate('XOR')">XOR</button>
+                                </div>
+                                <div class="quick-io">
+                                    <div class="logic-bit">
+                                        <div class="bit-label">A</div>
+                                        <div class="bit-switch">
+                                            <button class="bit-btn" data-bit="a" data-value="0"
+                                                onclick="setQuickInput('a', 0)">0</button>
+                                            <button class="bit-btn" data-bit="a" data-value="1"
+                                                onclick="setQuickInput('a', 1)">1</button>
+                                        </div>
+                                    </div>
+                                    <div class="logic-bit" id="bit-b">
+                                        <div class="bit-label">B</div>
+                                        <div class="bit-switch">
+                                            <button class="bit-btn" data-bit="b" data-value="0"
+                                                onclick="setQuickInput('b', 0)">0</button>
+                                            <button class="bit-btn" data-bit="b" data-value="1"
+                                                onclick="setQuickInput('b', 1)">1</button>
+                                        </div>
+                                    </div>
+                                    <div class="quick-out">
+                                        <span>OUT</span>
+                                        <div class="logic-output" id="quick-out">0</div>
+                                    </div>
+                                </div>
+                                <button class="logic-btn ghost quick-build" onclick="buildStarterCircuit()">Build On Canvas</button>
+                            </div>
+                            <div class="logic-card logic-guide">
+                                <div class="logic-card-title">Guide (English)</div>
+                                <div class="guide-line">SW (S) = Switch (input 0/1). Click to toggle.</div>
+                                <div class="guide-line">OUT = Light (output). Yellow = High, Dark = Low.</div>
+                                <div class="guide-line">AND / OR / XOR / NOT are logic gates.</div>
+                                <div class="guide-line">Click any gate or Signal row to monitor its value.</div>
+                                <div class="guide-line">Wire: click output pin, then input pin.</div>
+                                <div class="guide-line">Signal Inspector lists live outputs for every gate.</div>
+                            </div>
+                            <div class="logic-card logic-templates">
+                                <div class="logic-card-title">Templates</div>
+                                <div class="template-grid">
+                                    <button class="logic-btn ghost" onclick="buildTemplate('half_adder')">Half Adder</button>
+                                    <button class="logic-btn ghost" onclick="buildTemplate('full_adder')">Full Adder</button>
+                                    <button class="logic-btn ghost" onclick="buildTemplate('mux_2_1')">2:1 MUX</button>
+                                </div>
+                                <div class="template-note">Each template builds a ready circuit on canvas.</div>
+                            </div>
+                            <div class="logic-card logic-signals-card">
+                                <div class="logic-card-title">Signal Inspector</div>
+                                <div id="logic-signals" class="logic-signals">
+                                    <div class="signal-empty">No signals yet. Add gates to see live outputs.</div>
+                                </div>
+                                <div class="template-note">Click a row to monitor that signal.</div>
+                            </div>
+                            <div class="logic-card logic-truth">
+                                <div class="logic-card-title">Truth Table</div>
+                                <div class="truth-controls">
+                                    <button class="truth-mode active" data-mode="quick" onclick="setTruthMode('quick')">Quick</button>
+                                    <button class="truth-mode" data-mode="canvas" onclick="setTruthMode('canvas')">Canvas</button>
+                                    <button class="logic-btn ghost" onclick="generateTruthTable()">Generate</button>
+                                </div>
+                                <div id="truth-table" class="truth-table">Press Generate to build the table.</div>
+                            </div>
+                            <div class="logic-card logic-tutor">
+                                <div class="logic-card-title">Tutor</div>
+                                <div id="logic-tutor-step" class="tutor-step">Press Start to begin.</div>
+                                <div class="tutor-controls">
+                                    <button class="logic-btn ghost" onclick="startTutor()">Start</button>
+                                    <button class="logic-btn ghost" onclick="nextTutor()">Next</button>
+                                    <button class="logic-btn ghost" onclick="resetTutor()">Reset</button>
+                                </div>
+                                <div class="tutor-progress">Step <span id="tutor-progress">0</span>/4</div>
+                            </div>
+                            <div class="logic-card logic-save">
+                                <div class="logic-card-title">Save / Load</div>
+                                <textarea id="logic-save-data" rows="6" placeholder="Exported circuit JSON will appear here..."></textarea>
+                                <div class="save-controls">
+                                    <button class="logic-btn ghost" onclick="exportLogic()">Export</button>
+                                    <button class="logic-btn ghost" onclick="importLogic()">Import</button>
+                                    <button class="logic-btn ghost" onclick="copyLogic()">Copy</button>
+                                </div>
+                                <div class="template-note">You can copy the JSON and share it.</div>
+                            </div>
+                            <div class="logic-card logic-stats">
+                                <div class="logic-card-title">Circuit Stats</div>
+                                <div class="stats-grid">
+                                    <div class="stat-item"><span>Gates</span><strong id="stat-gates">0</strong></div>
+                                    <div class="stat-item"><span>Switches</span><strong id="stat-switches">0</strong></div>
+                                    <div class="stat-item"><span>Lights</span><strong id="stat-lights">0</strong></div>
+                                    <div class="stat-item"><span>Wires</span><strong id="stat-wires">0</strong></div>
+                                </div>
+                            </div>
+                            <div class="logic-card">
+                                <div class="logic-card-title">Quick Tips</div>
+                                <div class="logic-tip">Drag gates to reposition them.</div>
+                                <div class="logic-tip">Click an output, then an input to wire.</div>
+                                <div class="logic-tip">Tap Switch to toggle between 0/1.</div>
+                            </div>
+                            <div class="logic-card">
+                                <div class="logic-card-title">Legend</div>
+                                <div class="logic-legend">
+                                    <span class="legend-chip high">High</span>
+                                    <span class="legend-chip low">Low</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="canvas-wrapper logic-canvas-card">
+                            <canvas id="logic-canvas" width="300" height="200"></canvas>
+                            <div class="logic-hud">
+                                <div class="logic-hud-item"><span class="hud-dot high" id="hud-high-dot"></span>High</div>
+                                <div class="logic-hud-item"><span class="hud-dot low" id="hud-low-dot"></span>Low</div>
+                                <div class="logic-hud-item hud-monitor" id="hud-monitor">Monitor: -</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Chat Solver Panel (Hidden by default) -->
+        <div class="ai-chat-container" id="ai-chat-panel" style="display: none;">
+            <div class="chat-header">
+                <h3>AI Math Solver</h3>
+                <button class="icon-btn" onclick="toggleChat()" style="color: #ff4444;">✕</button>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="message bot">
+                    Hello! I can help you solve equations. Try typing a quadratic equation like "x^2 + 5x + 6 = 0" or
+                    just ask me to solve it!
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <textarea id="chat-input" placeholder="Type your math problem here..." rows="1"></textarea>
+                <div class="chat-actions">
+                    <button class="icon-btn" onclick="startChatVoice()">🎤</button>
+                    <button class="send-btn" onclick="sendChat()">➤</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Initial update for unit options
+        updateUnitOptions();
+    </script>
+</body>
+
+</html>
