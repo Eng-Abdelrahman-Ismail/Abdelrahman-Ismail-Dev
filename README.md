@@ -1,6 +1,6 @@
 # 🚀 Professional Engineering Portfolio | Abdelrahman Elhusein
 
-Welcome to my official GitHub repository! I am an **Electrical Engineering Student** specializing in Communications & Electronics, and a passionate **Frontend Web Developer**.
+Welcome to my official GitHub repository! I am a **4th-Year Electrical Engineering Student** specializing in Communications & Electronics, and a passionate**Frontend Web Developer**.
 
 ## 🌐 Live Demo
 Check out my live portfolio here: **[View Portfolio](https://eng-abdelrahman-ismail.github.io/Abdelrahman-Ismail-Dev/)**
