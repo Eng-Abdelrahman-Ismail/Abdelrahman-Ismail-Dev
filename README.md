@@ -14,7 +14,11 @@ Check out my live portfolio here: **[View Portfolio](https://eng-abdelrahman-ism
 * **Frameworks:** Bootstrap 5
 * **Tools:** VS Code, Git/GitHub, Figma
 
-### ⚡ Electronics & Embedded Systems
+### 📱 Mobile App Development
+* **Frameworks & Languages:** Flutter, Dart
+* **Experience:** Cross-platform application development (e.g., Scientific Calculator)
+  
+### 🔌 Electronics & Embedded Systems
 * **Certifications:** CCNA (Enterprise, Security, Automation), HCIA-AI, HCIA-Security
 * **Software:** MATLAB, Proteus, Altium Designer, Cisco Packet Tracer
 * **Hardware:** Microcontrollers, Sensors, PCB Design
