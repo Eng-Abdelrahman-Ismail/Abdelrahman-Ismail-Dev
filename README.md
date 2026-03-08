@@ -20,7 +20,7 @@ Check out my live portfolio here: **[View Portfolio](https://eng-abdelrahman-ism
   
 ### 🔌 Electronics & Embedded Systems
 * **Certifications:** CCNA (Enterprise, Security, Automation), HCIA-AI, HCIA-Security
-* **Software:** MATLAB, Proteus, Altium Designer, Cisco Packet Tracer
+* **Software:** MATLAB, Proteus, Altium Designer, Cisco Packet Tracer, SolidWorks (3D Modeling for Enclosures)
 * **Hardware:** Microcontrollers, Sensors, PCB Design
 
 ---
