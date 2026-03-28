@@ -1,0 +1,109 @@
+/* --- Mobile Fixes (Max Width 480px) --- */
+@media (max-width: 480px) {
+
+    /* Hero Name Scaling */
+    .hero-name {
+        font-size: 1.8rem !important;
+        /* Force smaller font */
+        padding: 10px 15px !important;
+        /* Reduce padding for rectangle */
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .gradient-text {
+        white-space: normal;
+        /* Allow text to wrap if needed */
+        display: block;
+    }
+
+    /* Tech Icons Wrapping */
+    .tech-icons {
+        gap: 0.5rem !important;
+    }
+
+    .tech-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    /* General Padding */
+    .container {
+        padding: 0 15px !important;
+    }
+
+    .section-content {
+        padding: 2rem 0;
+    }
+
+    /* Stats Grid */
+    .stats-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    /* --- Experience Section Mobile (ZigZag Restore) --- */
+    .experience-timeline::before {
+        left: 50% !important;
+        transform: translateX(-50%);
+    }
+
+    .experience-item {
+        width: 50% !important;
+        margin-bottom: 1.5rem;
+        padding: 0 !important;
+    }
+
+    .experience-item.left {
+        left: 0 !important;
+        text-align: right !important;
+        padding-right: 15px !important;
+        justify-content: flex-end !important;
+    }
+
+    .experience-item.right {
+        left: 50% !important;
+        text-align: left !important;
+        padding-left: 15px !important;
+        justify-content: flex-start !important;
+    }
+
+    .experience-item::before {
+        top: 20px !important;
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    .experience-item.left::before {
+        right: -6px !important;
+        left: auto !important;
+    }
+
+    .experience-item.right::before {
+        left: -6px !important;
+        right: auto !important;
+    }
+
+    /* Adjust card content for narrow columns */
+    .experience-card {
+        padding: 10px !important;
+    }
+
+    .experience-card h3 {
+        font-size: 0.85rem !important;
+        margin-bottom: 5px;
+    }
+
+    .experience-date-badge {
+        font-size: 0.6rem !important;
+        padding: 2px 5px !important;
+        margin-bottom: 5px;
+        display: inline-block;
+    }
+
+    .tag {
+        font-size: 0.6rem !important;
+        padding: 2px 4px !important;
+    }
+}
