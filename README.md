@@ -1,6 +1,12 @@
 # 🚀 Professional Engineering Portfolio | Abdelrahman Elhusein
 
-Welcome to my official GitHub repository! I am an **Electrical Engineering Student** specializing in Communications & Electronics, and a passionate **Frontend Web Developer**.
+### 🎓 About Me
+I am a **Communications and Electronics Engineering** student at the Higher Institute of Engineering and Technology in Sohag. I'm passionate about building innovative solutions using technology, ranging from embedded systems to mobile applications.
+
+- 🛠️ **Current Focus:** Working on my Graduation Project — a **Face and Voice Recognition Attendance System**.
+- 🚀 **Interested in:** Artificial Intelligence, Web Development, and Mobile App Development.
+- 📱 **Mobile Dev:** Currently building projects with **Flutter & Dart**.
+- 💻 **Hardware & Embedded:** Experience with **AVR Microcontrollers (C/Assembly)** and **Microwave Engineering**.
 
 ## 🌐 Live Demo
 Check out my live portfolio here: **[View Portfolio](https://eng-abdelrahman-ismail.github.io/Abdelrahman-Ismail-Dev/)**
@@ -14,11 +20,22 @@ Check out my live portfolio here: **[View Portfolio](https://eng-abdelrahman-ism
 * **Frameworks:** Bootstrap 5
 * **Tools:** VS Code, Git/GitHub, Figma
 
+* **Programming:** C++, Dart, Assembly.
+* **Frameworks:** Flutter.
+* **Embedded Systems:** AVR Microcontrollers, Raspberry Pi.
+* **Design & Tools:** SolidWorks (3D Modeling), GitHub, Digital Signal Processing (DSP).
+  
 ### ⚡ Electronics & Embedded Systems
 * **Certifications:** CCNA (Enterprise, Security, Automation), HCIA-AI, HCIA-Security
 * **Software:** MATLAB, Proteus, Altium Designer, Cisco Packet Tracer
 * **Hardware:** Microcontrollers, Sensors, PCB Design
 
+
+
+### 📁 Top Projects
+* **[Graduation Project]** - Face & Voice Recognition Attendance System (Integration of hardware and AI).
+* **[Flutter Calculator]** - A sleek, functional calculator app built with Flutter.
+* **[Portfolio]** - Showcasing my engineering and design work.
 ---
 
 ## 🏆 Featured Projects
